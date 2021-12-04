@@ -109,13 +109,10 @@ async def on_message(message):
     
   if message.author == client.user:
     return   
-  #title of award - name of artist (x votes)
   
   if message.content.startswith('!show'):
-    #populate votes list with updated number of votes based on reactions
-    #create embed
     channel = client.get_channel(861394194526633984)
-    #this process must be quicker
+    #loop through messages and populate votes list with updated number of votes based on reactions
     for i in range(0, categories):
       grammy_msg = await channel.fetch_message(message_id[i])
       reaction_list = grammy_msg.reactions
@@ -127,14 +124,11 @@ async def on_message(message):
       index_list[i] = (temp_count.index(maximum))
       votes[i] = maximum
     embed = discord.Embed(title="Leaderboard", color=0x00ff00, type="rich")
-    #add fields to embed (signifies # of categories)
-    #format everything nicely
     for i in range(0, categories):
       maximum = max(votes)
       embed.add_field(name=awards[i], value =  nominees[i][index_list[i]]+ " | " + "Votes: " + str(votes[i]), inline=True)
 
     await message.channel.send(embed=embed)
-  #when setting up server, just do the below for every single grammy voting option at once, then remove it from the code (copy ID from each of those messages)   
         
   await client.process_commands(message)
 
