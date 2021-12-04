@@ -5,13 +5,14 @@ from discord.ext import commands
 
 personal_token = os.environ['personal_token']
 total_count = 0
-#1 less than number of categories
 categories = 17
-#client = discord.Client()
+#initializing bot client
 client = commands.Bot(command_prefix='!')
+
+#list of all award categories
 awards = ["Record of the Year", "Album of the Year", "Song of the Year", "Best new Artist", "Best Pop Solo Performance", "Best Pop Duo Performance", "Best Traditional Pop Vocal Album", "Best Pop Vocal Album", "Best R&B Performance", "Best Traditional R&B performance", "Best R&B Song", "Best Progressive R&B Album", "Best R&B Album", "Best Rap Performance", "Best Melodic Rap Performance", "Best Rap Song", "Best Rap Album"] 
 
-
+#nested list with nominees in each category
 nominees = [
   
   ["ABBA - I Still Have Faith In You", "Jon Batiste - Freedom", "Tony Bennett & Lady Gaga - I Get A Kick Out Of You", "Justin Bieber Featuring Daniel Caesar & Giveon - Peaches", "Brandi Carlile - Right On Time", "Doja Cat Featuring SZA - Kiss Me More", "Billie Eilish - Happier Than Ever", "Lil Nas X - Montero (Call Me By Your Name)", "Olivia Rodrigo - drivers license", "Silk Sonic - Leave The Door Open"], 
@@ -56,9 +57,9 @@ nominees = [
 ]
 
 
-#each element in vote_count is a dictionary with name of nominee and number of votes
+#each element in vote_count is the highest vote count in each category (updated when !show is ran)
 votes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-#manually fill in message ids instead of using database
+
 message_id = [915119973226143754, 915120096333168680, 915120112317648946, 915120126850920488, 915120141040234506, 915120148162170910, 915120156689174610, 915120165493026826, 915120172459782154, 915120179527155752, 915120186569412639, 915120193565495296, 915120203371790367, 915120210984443916, 915120218282528788, 915120225278648360, 914953581252194357]
 
 upper_values = [10, 10, 10, 10, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 5]
@@ -83,7 +84,7 @@ async def on_ready():
     #upper needs to be 1 less than the number of nominees based on the given ith award category 
     upper = upper_values[i]
     for j in range(0, upper):
-      embed.add_field(name=number_emojis[j]+" "+str(nominees[i][j]), value="‎‎‎__", inline=True)
+      embed.add_field(name=number_emojis[j]+" "+str(nominees[i][j]), value="** **", inline=True)
     channel = client.get_channel(861394194526633984)
     new_message = await channel.send(embed=embed)
     temp_message_id = new_message.id
